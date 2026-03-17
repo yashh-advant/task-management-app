@@ -1,20 +1,27 @@
 import React from 'react';
-import { priorityOptions } from '../../utils/constant';
+import CategoryIcon from '../Icons/CategoryIcon';
+import PriorityIcon from '../Icons/PriorityIcon';
+import { Link } from 'react-router';
 
-function Task({ viewMode, task }) {
+function Task({ isListMode, task }) {
   return (
-    <div
-      className={`flex flex-col text-white ${viewMode === 'board' ? 'min-w-[300px] ' : ''} border border-gray-500 rounded-lg my-2 p-1`}
+    <Link
+      to={`/tasks/${task.id}`}
+      className={`flex flex-col text-white ${!isListMode && 'min-w-[300px] bg-[#171f2c]'} mx-2 rounded-lg my-4  p-1`}
     >
-      <div className="flex gap-3 ">
-        <p>{task.category}</p>
-        <h2 className="line-clamp-1">{task.title}</h2>
+      <div
+        className={`flex gap-3 items-center ${!isListMode && 'flex-col-reverse justify-start items-start'}`}
+      >
+        <PriorityIcon priority={task.priority} />
+        <div className="flex gap-2 m-1">
+          <CategoryIcon category={task.category} />
+          <h2 className="line-clamp-1">{task.title}</h2>
+        </div>
       </div>
-      <div>
-        <p>{priorityOptions[task.priority - 1]}</p>
+      <div className="ml-auto">
         <p>{task.due_Date}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 

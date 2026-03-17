@@ -13,7 +13,7 @@ function ProjectList({ projects, currentProject, onSelectProject }) {
   };
 
   return (
-    <div className="relative flex items-center h-[50px] md:h-[70px]  border border-b border-[#2a2a2a]">
+    <div className="relative flex items-center h-[50px] md:h-[70px] border-b border-[#2a2a2a]">
       <div className="text-center mx-auto" title={currentProject.name} onClick={handleShowProjects}>
         {currentProject.name}
       </div>

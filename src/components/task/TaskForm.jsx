@@ -6,7 +6,7 @@ const initialState = {
   title: '',
   description: '',
   priority: 5,
-  due_date: null,
+  due_date: new Date(),
   category: 'todo',
 };
 
@@ -46,10 +46,14 @@ function TaskForm({ ref, onAddTask }) {
 
   return (
     <dialog ref={dialogRef} className="bg-transparent min-h-screen min-w-screen z-10">
-      <div className="bg-transparent backdrop-blur-xs flex justify-center items-center text-white h-screen">
+      <div
+        className="bg-transparent backdrop-blur-xs flex justify-center items-center text-white h-screen"
+        onClick={handleClose}
+      >
         <form
-          className="bg-[#2a2a2a] flex flex-col justify-evenly border md:h-[300px] md:w-[500px] border-gray-600 rounded-lg p-2"
+          className="bg-[#030712] md:px-4 flex flex-col justify-evenly border md:h-[300px] md:w-[500px] border-gray-600 rounded-lg p-2"
           onSubmit={handleSubmit}
+          onClick={e => e.stopPropagation()}
         >
           <div>
             <input
@@ -79,7 +83,7 @@ function TaskForm({ ref, onAddTask }) {
               {options =>
                 options.map(option => (
                   <li
-                  key={option}
+                    key={option}
                     className={`bg-gray-500 ${taskDetails.category == option && 'bg-gray-700'} rounded-sm p-1`}
                     p-2
                     onClick={() => handleOnChange('category', option)}
@@ -89,7 +93,6 @@ function TaskForm({ ref, onAddTask }) {
                 ))
               }
             </SelectOptions>
-
             <SelectOptions
               selectedOption={priorityOptions[taskDetails.priority - 1]}
               options={[5, 4, 3, 2, 1]}
@@ -97,7 +100,7 @@ function TaskForm({ ref, onAddTask }) {
               {options =>
                 options.map(option => (
                   <li
-                  key={option}
+                    key={option}
                     className="w-fit bg-gray-500"
                     onClick={() => handleOnChange('priority', option)}
                   >
@@ -106,7 +109,15 @@ function TaskForm({ ref, onAddTask }) {
                 ))
               }
             </SelectOptions>
-            <input type="date" value={taskDetails.due_date} />
+            <input
+              type="date"
+              value={
+                taskDetails.due_date
+                  ? new Date(taskDetails.due_date).toISOString().slice(0, 10)
+                  : ''
+              }
+              onChange={event => handleOnChange('due_date', event.target.value)}
+            />{' '}
           </div>
 
           {error && <p className="m-2 text-red-500">{error}</p>}

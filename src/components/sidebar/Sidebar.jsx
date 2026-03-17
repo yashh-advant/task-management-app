@@ -5,6 +5,7 @@ import ProjectList from './ProjectList';
 import TaskForm from '../task/TaskForm';
 import { useDispatch } from 'react-redux';
 import { taskActions } from '../../store/task-slice';
+import { Link } from 'react-router';
 function Sidebar({ selectedProject, projects, onSelectProject }) {
   const formRef = useRef();
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function Sidebar({ selectedProject, projects, onSelectProject }) {
   return (
     <>
       <TaskForm ref={formRef} onAddTask={handleAddTask} />
-      <section className=" border min-h-screen  md:w-[200px] lg:w-[300px] w-[80px] border-r-[#2a2a2a]">
+      <section className=" border min-h-screen md:w-[200px] lg:w-[300px] w-[120px] border-r-[#2a2a2a]">
         <ul className="flex text-white h-full justify-start flex-col ">
           <li>
             <ProjectList
@@ -31,6 +32,11 @@ function Sidebar({ selectedProject, projects, onSelectProject }) {
               projects={projects}
               onSelectProject={onSelectProject}
             />
+          </li>
+          <li className="mt-5 mx-auto">
+            <Link to="/tasks" className="flex items-center justify-start gap-2">
+              All Tasks
+            </Link>
           </li>
           <li className="mt-5 mx-auto">
             <div className="flex items-center justify-start gap-2" onClick={handleShowForm}>

@@ -12,6 +12,7 @@ import AuthForm from './components/auth/AuthForm.jsx';
 import Authenticator from './components/Authenticator.jsx';
 import { login } from './services/auth-service.js';
 import TasksContainer from './components/task/TasksContainer.jsx';
+import TaskDetails from './components/task/TaskDetails.jsx';
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
         path: '',
         element: <TasksContainer />,
       },
+      {
+        path: ':taskId',
+        element : <TaskDetails/>
+      }
     ],
   },
 ]);

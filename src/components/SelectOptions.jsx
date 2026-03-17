@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-function SelectOptions({ selectedOption, options, children }) {
-  console.log(selectedOption);
+function SelectOptions({ classForSelected, classForList, selectedOption, options, children }) {
+  // console.log(selectedOption);
 
   const [showOptions, setShowOptions] = useState(false);
   const handleShowOptions = () => {
@@ -9,9 +9,9 @@ function SelectOptions({ selectedOption, options, children }) {
   };
   return (
     <div className="relative" onClick={handleShowOptions}>
-      <p className="bg-gray-700 p-1.5 rounded-md">{selectedOption}</p>
+      <p className={`${classForSelected}`}>{selectedOption}</p>
       {showOptions && (
-        <div className="absolute bg-gray-600 p-2 mt-2 rounded-md">
+        <div className={`absolute z-10 rounded-md ${classForList} `}>
           <ul className="flex flex-col gap-1 w-fit">{children(options)}</ul>
         </div>
       )}
