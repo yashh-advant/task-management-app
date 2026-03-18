@@ -1,8 +1,6 @@
 import React from 'react';
 
 function CategoryIcon({ category }) {
-
-  console.log(category);
   
   let content;
 

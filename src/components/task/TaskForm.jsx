@@ -6,7 +6,7 @@ const initialState = {
   title: '',
   description: '',
   priority: 5,
-  due_date: new Date(),
+  due_date: new Date().toISOString().slice(0, 10),
   category: 'todo',
 };
 
@@ -30,7 +30,8 @@ function TaskForm({ ref, onAddTask }) {
       setError('Title Is Required');
       return;
     }
-    onAddTask(taskDetails);
+    onAddTask({ ...taskDetails, created_at: new Date().toISOString() });
+    setTaskDetails(initialState);
     dialogRef.current.close();
   };
 
@@ -117,7 +118,7 @@ function TaskForm({ ref, onAddTask }) {
                   : ''
               }
               onChange={event => handleOnChange('due_date', event.target.value)}
-            />{' '}
+            />
           </div>
 
           {error && <p className="m-2 text-red-500">{error}</p>}
