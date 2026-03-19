@@ -1,8 +1,15 @@
+export const filterTasks = (filterOptions, tasks) => {
+  return tasks.filter(task => {
+    const categoryMatch =
+      !filterOptions.category.length || filterOptions.category.includes(task.category);
+    const priorityMatch =
+      !filterOptions.priority.length || filterOptions.priority.includes(task.priority);
+
+    return categoryMatch && priorityMatch;
+  });
+};
+
 export const sortTasks = (orderBy, tasks, ascOrder = false) => {
-
-  console.log(ascOrder);
-  
-
   Object.keys(tasks).forEach(key => {
     tasks[key] = [...tasks[key]].sort((a, b) => {
       let valA = a[orderBy];
@@ -18,6 +25,10 @@ export const sortTasks = (orderBy, tasks, ascOrder = false) => {
 
       if (typeof valA === 'string' && typeof valB === 'string') {
         return ascOrder ? valA.localeCompare(valB) : valB.localeCompare(valA);
+      }
+
+      if (orderBy == 'priority') {
+        return ascOrder ? valB - valA : valA - valB;
       }
 
       return ascOrder ? valA - valB : valB - valA;

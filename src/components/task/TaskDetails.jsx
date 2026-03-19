@@ -3,8 +3,10 @@ import PriorityIcon from '../Icons/PriorityIcon';
 import CategoryIcon from '../Icons/CategoryIcon';
 import { priorityOptions } from '../../utils/constant';
 import { useOutletContext, useParams } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { taskActions } from '../../store/task-slice';
+import SelectOptions from '../SelectOptions';
+import TaskDetailsHeader from '../header/TaskDetailsHeader';
 
 function TaskDetails() {
   const [taskDetails, setTaskDetails] = useState({
@@ -17,7 +19,7 @@ function TaskDetails() {
   const dispatch = useDispatch();
   const { taskId } = useParams();
   const projectId = useOutletContext();
-
+  const { darkTheme } = useSelector(state => state.ui);
   useEffect(() => {
     const tasks = JSON.parse(localStorage.getItem(projectId)) || [];
     const fiteredTask = tasks.filter(task => task.id == taskId);
@@ -39,15 +41,15 @@ function TaskDetails() {
   };
 
   return (
-    <div className="text-white w-full">
-      <div className="h-[50px] md:h-[70px] border-b border-[#2a2a2a]">header</div>
+    <div className=" w-full">
+      <TaskDetailsHeader projectId={projectId} taskId={taskId} />
 
       <div className="flex flex-col md:flex-row mt-3 md:p-4 p-4">
         <div className="md:p-4 flex-1 md:border-r border-gray-500 min-w-fit mb-3 pb-4 md:mb-0 border-b md:border-b-0 flex flex-col gap-2">
           <input
             type="text"
             value={taskDetails.title || ''}
-            className="bg-transparent md:text-2xl font-semibold focus:outline-none"
+            className="bg-transparent md:text-2xl font-semibold focus:outline-none placeholder:bg-gray-500"
             onChange={event => onChangeHandler('title', event.target.value)}
           />
 
@@ -62,13 +64,55 @@ function TaskDetails() {
         <div className="p-4">
           <ul className="flex flex-col gap-2">
             <li className="flex items-center gap-4">
-              <PriorityIcon priority={taskDetails.priority} />
-              <p>{priorityOptions[taskDetails.priority - 1]}</p>
+              <SelectOptions
+                classForList={`p-2 gap-2`}
+                options={[5, 4, 3, 2, 1]}
+                selectedOption={
+                  <div className="flex items-center gap-2">
+                    <PriorityIcon priority={taskDetails.priority} />{' '}
+                    <p>{priorityOptions[taskDetails.priority - 1]}</p>
+                  </div>
+                }
+              >
+                {options =>
+                  options.map(option => (
+                    <li
+                      key={option}
+                      className={`flex gap-2 px-1 items-center rounded-md py-[2px] ${option === taskDetails.priority && (darkTheme ? 'bg-[#1f2937] ' : 'bg-green-100')} ${darkTheme ? 'hover:bg-[#1f2937] ' : 'hover:bg-green-100'}`}
+                      onClick={() => onChangeHandler('priority', option)}
+                    >
+                      <PriorityIcon priority={option} />
+                      <p>{priorityOptions[option - 1]}</p>
+                    </li>
+                  ))
+                }
+              </SelectOptions>
             </li>
 
             <li className="flex items-center gap-4">
-              <CategoryIcon category={taskDetails.category} />
-              <p>{taskDetails.category}</p>
+              <SelectOptions
+                classForList={` p-2 gap-2`}
+                options={['todo', 'pending', 'completed']}
+                selectedOption={
+                  <div className="flex items-center gap-2">
+                    <CategoryIcon category={taskDetails.category} />
+                    <p>{taskDetails.category}</p>
+                  </div>
+                }
+              >
+                {options =>
+                  options.map(option => (
+                    <li
+                      key={option}
+                      className={`flex gap-2 px-1 items-center rounded-md py-[2px] ${option === taskDetails.category && (darkTheme ? 'bg-[#1f2937] ' : 'bg-green-100')} ${darkTheme ? 'hover:bg-[#1f2937] ' : 'hover:bg-green-100'}`}
+                      onClick={() => onChangeHandler('category', option)}
+                    >
+                      <CategoryIcon category={option} />
+                      <p>{option}</p>
+                    </li>
+                  ))
+                }
+              </SelectOptions>
             </li>
 
             <li className="flex items-center gap-4">

@@ -3,11 +3,16 @@ import CategoryIcon from '../Icons/CategoryIcon';
 import PriorityIcon from '../Icons/PriorityIcon';
 import SelectOptions from '../SelectOptions';
 import { priorityOptions } from '../../utils/constant';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { taskActions } from '../../store/task-slice';
 import { Link, useOutletContext } from 'react-router';
+import { useDraggable } from '@dnd-kit/core';
 
 function Task({ isListMode, task }) {
+  const { setNodeRef, listeners, attributes } = useDraggable({
+    id: task.id,
+  });
+  const { darkTheme } = useSelector(state => state.ui);
   const projectId = useOutletContext();
   const [taskDetails, setTaskDetails] = useState(task);
   const dispatch = useDispatch();
@@ -23,14 +28,13 @@ function Task({ isListMode, task }) {
 
   return (
     <div
-      draggable
-      className={`flex items-center hover:bg-[#1f2937] text-white ${!isListMode && 'min-w-[300px] bg-[#171f2c]'} mx-2 rounded-lg my-4 p-1`}
+      className={`flex items-center ${darkTheme ? 'hover:bg-[#1f2937]' : 'hover:bg-green-100'} ${!isListMode && `min-w-[300px] ${darkTheme ? 'bg-[#171f2c]' : 'bg-white border'} `} mx-2 rounded-lg my-4 p-1`}
     >
       <div
-        className={`flex gap-3 items-center ${!isListMode && 'flex-col-reverse justify-start items-start'}`}
+        className={`flex gap-3 flex-1 items-center ${!isListMode && 'flex-col-reverse justify-start items-start'}`}
       >
         <SelectOptions
-          classForList="border border-gray-500 bg-[#030712] p-2 gap-2"
+          classForList={` p-2 gap-2`}
           options={[5, 4, 3, 2, 1]}
           selectedOption={<PriorityIcon priority={taskDetails.priority} />}
         >
@@ -38,7 +42,7 @@ function Task({ isListMode, task }) {
             options.map(option => (
               <li
                 key={option}
-                className={`flex gap-2 px-1 items-center rounded-md py-[2px] ${option === taskDetails.priority ? 'bg-[#1f2937]' : ''} hover:bg-[#1f2937]`}
+                className={`flex gap-2 px-1 items-center rounded-md py-[2px] ${option === taskDetails.priority && (darkTheme ? 'bg-[#1f2937] ' : 'bg-green-100')} ${darkTheme ? 'hover:bg-[#1f2937]' : 'hover:bg-green-100'}`}
                 onClick={() => updateTask('priority', option)}
               >
                 <PriorityIcon priority={option} />
@@ -48,9 +52,9 @@ function Task({ isListMode, task }) {
           }
         </SelectOptions>
 
-        <div className="flex gap-2 m-1">
+        <div className="flex w-full gap-2 m-1">
           <SelectOptions
-            classForList="border border-gray-500 bg-[#030712] p-2 gap-2"
+            classForList={` p-2 gap-2`}
             options={['todo', 'pending', 'completed']}
             selectedOption={<CategoryIcon category={taskDetails.category} />}
           >
@@ -58,7 +62,7 @@ function Task({ isListMode, task }) {
               options.map(option => (
                 <li
                   key={option}
-                  className={`flex gap-2 px-1 rounded-md py-[2px] ${option === taskDetails.category ? 'bg-[#1f2937]' : ''} hover:bg-[#1f2937]`}
+                  className={`flex gap-2 px-1 items-center rounded-md py-[2px] ${option === taskDetails.category && (darkTheme ? 'bg-[#1f2937] ' : 'bg-green-100')} ${darkTheme ? 'hover:bg-[#1f2937]' : 'hover:bg-green-100'}`}
                   onClick={() => updateTask('category', option)}
                 >
                   <CategoryIcon category={option} />
@@ -67,9 +71,11 @@ function Task({ isListMode, task }) {
               ))
             }
           </SelectOptions>
+
           <Link to={`/tasks/${task.id}`} className="line-clamp-1 ml-2">
             {taskDetails.title}
           </Link>
+          <div className=" flex-1" ref={setNodeRef} {...listeners} {...attributes}></div>
         </div>
       </div>
 

@@ -3,10 +3,11 @@ import addIcon from '../../assets/add.png';
 import avatar from '../../assets/avatar.png';
 import ProjectList from './ProjectList';
 import TaskForm from '../task/TaskForm';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { taskActions } from '../../store/task-slice';
 import { Link } from 'react-router';
 function Sidebar({ selectedProject, projects, onSelectProject }) {
+  const {darkTheme} = useSelector(state => state.ui)
   const formRef = useRef();
   const dispatch = useDispatch();
   const handleShowForm = () => {
@@ -24,9 +25,9 @@ function Sidebar({ selectedProject, projects, onSelectProject }) {
   return (
     <>
       <TaskForm ref={formRef} onAddTask={handleAddTask} />
-      <section className=" border min-h-screen md:w-[200px] lg:w-[300px] w-[120px] border-r-[#2a2a2a]">
-        <ul className="flex text-white h-full justify-start flex-col ">
-          <li>
+      <section className="border-r  md:w-[200px] lg:w-[300px] w-[120px] border-[#2a2a2a]">
+        <ul className="flex h-full justify-start flex-col ">
+          <li >
             <ProjectList
               currentProject={selectedProject}
               projects={projects}
@@ -40,7 +41,7 @@ function Sidebar({ selectedProject, projects, onSelectProject }) {
           </li>
           <li className="mt-5 mx-auto">
             <div className="flex items-center justify-start gap-2" onClick={handleShowForm}>
-              <img className="mx-auto md:ml-auto invert h-[20px]" src={addIcon} alt="Add Icon" />
+              <img className={`mx-auto md:ml-auto ${darkTheme && 'invert'}  h-[20px]`} src={addIcon} alt="Add Icon" />
               <button className="hidden md:block">Add Task</button>
             </div>
           </li>

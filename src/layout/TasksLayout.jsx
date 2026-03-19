@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
 import Sidebar from '../components/sidebar/Sidebar';
+import { useSelector } from 'react-redux';
 
 function TasksLayout() {
+  const { darkTheme } = useSelector(state => state.ui);
   const projects = [
     {
       id: 1,
@@ -13,15 +15,18 @@ function TasksLayout() {
       name: 'Users project',
     },
   ];
-
+  const navigate = useNavigate();
   const [selectedProject, setSelectedProject] = useState(projects[0]);
 
   const handleSelectProject = projectDetails => {
     setSelectedProject(projectDetails);
+    navigate('/tasks')
   };
   return (
     <>
-      <div className="flex bg-[#030712] min-h-screen w-full">
+      <div
+        className={`flex  bg-[#030712] ${darkTheme ? 'bg-[#030712] text-white' : 'bg-white text-black'}  min-h-screen w-full`}
+      >
         <Sidebar
           selectedProject={selectedProject}
           projects={projects}

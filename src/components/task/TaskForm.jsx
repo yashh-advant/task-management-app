@@ -1,6 +1,8 @@
 import React, { useImperativeHandle, useRef, useState } from 'react';
 import SelectOptions from '../SelectOptions';
 import { priorityOptions } from '../../utils/constant';
+import CategoryIcon from '../Icons/CategoryIcon';
+import { useSelector } from 'react-redux';
 
 const initialState = {
   title: '',
@@ -12,7 +14,7 @@ const initialState = {
 
 function TaskForm({ ref, onAddTask }) {
   const [taskDetails, setTaskDetails] = useState(initialState);
-
+  const { darkTheme } = useSelector(state => state.ui);
   const [error, setError] = useState(null);
 
   const dialogRef = useRef();
@@ -48,11 +50,11 @@ function TaskForm({ ref, onAddTask }) {
   return (
     <dialog ref={dialogRef} className="bg-transparent min-h-screen min-w-screen z-10">
       <div
-        className="bg-transparent backdrop-blur-xs flex justify-center items-center text-white h-screen"
+        className="bg-transparent backdrop-blur-xs flex justify-center items-center  h-screen"
         onClick={handleClose}
       >
         <form
-          className="bg-[#030712] md:px-4 flex flex-col justify-evenly border md:h-[300px] md:w-[500px] border-gray-600 rounded-lg p-2"
+          className={`${darkTheme ? 'bg-[#030712] text-white' : 'bg-white'} md:px-4 flex flex-col justify-evenly border md:h-[300px] md:w-[500px] border-gray-600 rounded-lg p-2`}
           onSubmit={handleSubmit}
           onClick={e => e.stopPropagation()}
         >
@@ -78,23 +80,36 @@ function TaskForm({ ref, onAddTask }) {
           </div>
           <div className="flex gap-4 border-b border-gray-500 pb-3">
             <SelectOptions
-              selectedOption={taskDetails.category}
+              classForSelected="px-2  rounded-md py-[1px]"
+              classForList={`${darkTheme ? 'bg-[#030712]' : 'bg-white'} border border-[#2a2a2a] p-1`}
+              selectedOption={
+                <div className="flex">
+                  <CategoryIcon category={taskDetails.category} />
+                  <p>{taskDetails.category}</p>
+                </div>
+              }
               options={['todo', 'pending', 'completed']}
             >
               {options =>
                 options.map(option => (
                   <li
                     key={option}
-                    className={`bg-gray-500 ${taskDetails.category == option && 'bg-gray-700'} rounded-sm p-1`}
+                    className={`${option == taskDetails.category && `${darkTheme ? 'bg-[#1f2937] ' : 'bg-green-100'}`} ${darkTheme ? 'hover:bg-[#1f2937] ' : 'hover:bg-green-100'} rounded-md px-2 py-0.5`}
                     p-2
                     onClick={() => handleOnChange('category', option)}
                   >
-                    {option}
+                    <div className="flex p-px gap-2">
+                      <CategoryIcon category={option} />
+                      <p>{option}</p>
+                    </div>
                   </li>
                 ))
               }
             </SelectOptions>
+
             <SelectOptions
+              classForSelected="px-2  rounded-md py-[1px]"
+              classForList={`${darkTheme ? 'bg-[#030712]' : 'bg-white'} border border-[#2a2a2a] p-1`}
               selectedOption={priorityOptions[taskDetails.priority - 1]}
               options={[5, 4, 3, 2, 1]}
             >
@@ -102,7 +117,7 @@ function TaskForm({ ref, onAddTask }) {
                 options.map(option => (
                   <li
                     key={option}
-                    className="w-fit bg-gray-500"
+                    className={`${option == taskDetails.priority && `${darkTheme ? 'bg-[#1f2937] ' : 'bg-green-100'}`} ${darkTheme ? 'hover:bg-[#1f2937] ' : 'hover:bg-green-100'} rounded-md px-2 py-0.5`}
                     onClick={() => handleOnChange('priority', option)}
                   >
                     {priorityOptions[option - 1]}

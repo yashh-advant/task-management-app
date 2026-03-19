@@ -26,7 +26,6 @@ function TasksContainer() {
     <>
       <div className="flex flex-col min-h-screen w-full overflow-hidden">
         <TasksHeader search={searchText} onSearchChange={e => setSearchText(e.target.value)} />
-        {tasks.length == 0 && <p className="text-white ml-4">No tasks found</p>}
         <Tasks tasks={filteredTasks} />
       </div>
     </>

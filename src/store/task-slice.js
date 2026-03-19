@@ -10,7 +10,7 @@ const taskSlice = createSlice({
       state.tasks = action.payload;
     },
     removeTask: (state, action) => {
-      state.tasks = state.tasks.filter(task => task.id == action.payload);
+      state.tasks = state.tasks.filter(task => task.id != action.payload);
     },
     addTask: (state, action) => {
       state.tasks.push(action.payload);

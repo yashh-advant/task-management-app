@@ -12,26 +12,25 @@ function OrderIcon({ ascOrder }) {
         focusable="false"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
-        className=""
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M1.26988 12.3262C0.951673 12.061 0.90868 11.5881 1.17385 11.2699C1.43903 10.9517 1.91195 10.9087 2.23016 11.1739L4 12.6487L4 1.75C4 1.33579 4.33579 1 4.75 1C5.16421 1 5.5 1.33579 5.5 1.75L5.5 12.6488L7.26988 11.1739C7.58809 10.9087 8.06101 10.9517 8.32618 11.2699C8.59136 11.5881 8.54836 12.061 8.23016 12.3262L5.23016 14.8262C4.95202 15.058 4.54801 15.058 4.26988 14.8262L1.26988 12.3262Z"
         ></path>
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M7 1.75C7 1.33579 7.33579 1 7.75 1H14.25C14.6642 1 15 1.33579 15 1.75C15 2.16421 14.6642 2.5 14.25 2.5H7.75C7.33579 2.5 7 2.16421 7 1.75Z"
         ></path>
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M7 4.75C7 4.33579 7.33579 4 7.75 4H12.25C12.6642 4 13 4.33579 13 4.75C13 5.16421 12.6642 5.5 12.25 5.5H7.75C7.33579 5.5 7 5.16421 7 4.75Z"
         ></path>
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M7 7.75C7 7.33579 7.33579 7 7.75 7H9.25C9.66421 7 10 7.33579 10 7.75C10 8.16421 9.66421 8.5 9.25 8.5H7.75C7.33579 8.5 7 8.16421 7 7.75Z"
         ></path>
       </svg>
@@ -51,23 +50,23 @@ function OrderIcon({ ascOrder }) {
       className=""
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M3.75004 14C4.16425 14 4.50004 13.6642 4.50004 13.25L4.50004 2.3513L6.26988 3.82617C6.58809 4.09134 7.06101 4.04835 7.32618 3.73014C7.59136 3.41193 7.54836 2.93901 7.23016 2.67383L4.23016 0.173834C3.95202 -0.0579445 3.54802 -0.0579445 3.26988 0.173834L0.269881 2.67383C-0.0483271 2.93901 -0.0913202 3.41193 0.173853 3.73014C0.439026 4.04835 0.911949 4.09134 1.23016 3.82617L3.00004 2.35126L3.00004 13.25C3.00004 13.6642 3.33582 14 3.75004 14Z"
       ></path>
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M13.25 12.5H6.75C6.33579 12.5 6 12.8358 6 13.25C6 13.6642 6.33579 14 6.75 14H13.25C13.6642 14 14 13.6642 14 13.25C14 12.8358 13.6642 12.5 13.25 12.5Z"
       ></path>
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M11.25 9.5H6.75C6.33579 9.5 6 9.83579 6 10.25C6 10.6642 6.33579 11 6.75 11H11.25C11.6642 11 12 10.6642 12 10.25C12 9.83579 11.6642 9.5 11.25 9.5Z"
       ></path>
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M8.25 6.5H6.75C6.33579 6.5 6 6.83579 6 7.25C6 7.66421 6.33579 8 6.75 8H8.25C8.66421 8 9 7.66421 9 7.25C9 6.83579 8.66421 6.5 8.25 6.5Z"
       ></path>
     </svg>
