@@ -5,9 +5,14 @@ import { uiActions } from '../../store/ui-slice';
 function TasksHeader({ search, onSearchChange }) {
   const { darkTheme } = useSelector(state => state.ui);
   const dispatch = useDispatch();
-
   const onClickHandler = () => {
-    dispatch(uiActions.toggleTheme());
+    if (darkTheme) {
+      dispatch(uiActions.setDarkTheme(false));
+      document.documentElement.classList.remove('dark');
+    } else {
+      dispatch(uiActions.setDarkTheme(true));
+      document.documentElement.classList.add('dark');
+    }
   };
 
   return (

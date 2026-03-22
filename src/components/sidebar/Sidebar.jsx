@@ -1,17 +1,35 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import addIcon from '../../assets/add.png';
 import avatar from '../../assets/avatar.png';
 import ProjectList from './ProjectList';
 import TaskForm from '../task/TaskForm';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { taskActions } from '../../store/task-slice';
 import { Link } from 'react-router';
 function Sidebar({ selectedProject, projects, onSelectProject }) {
-  const {darkTheme} = useSelector(state => state.ui)
+  const [projectList, setProjectList] = useState(projects);
+  const [projectName, setProjectName] = useState('');
+  const [showAddForm, setShowAddForm] = useState(false);
   const formRef = useRef();
   const dispatch = useDispatch();
   const handleShowForm = () => {
     formRef.current.open();
+  };
+
+  const handleAddForm = () => {
+    setShowAddForm(prev => !prev);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!projectName.trim()) {
+      return;
+    }
+    const newProject = { name: projectName, id: Math.random() };
+    const storedProjects = JSON.parse(localStorage.getItem('projects'));
+    localStorage.setItem('projects', JSON.stringify([...storedProjects, newProject]));
+    setProjectList(prev => [...prev, newProject]);
+    setShowAddForm(false);
   };
 
   const handleAddTask = newTask => {
@@ -27,12 +45,47 @@ function Sidebar({ selectedProject, projects, onSelectProject }) {
       <TaskForm ref={formRef} onAddTask={handleAddTask} />
       <section className="border-r  md:w-[200px] lg:w-[300px] w-[120px] border-[#2a2a2a]">
         <ul className="flex h-full justify-start flex-col ">
-          <li >
+          <li>
             <ProjectList
               currentProject={selectedProject}
-              projects={projects}
+              projects={projectList}
               onSelectProject={onSelectProject}
             />
+          </li>
+          <li className="mt-5 mx-auto relative">
+            <button onClick={handleAddForm}>Add Project</button>
+
+            {showAddForm && (
+              <form
+                onSubmit={handleSubmit}
+                className="absolute top-full left-0 mt-2 w-[200px] bg-white dark:bg-[#030712] border border-gray-500 rounded-md p-3 flex flex-col gap-2 z-50"
+              >
+                <input
+                  type="text"
+                  placeholder="Project name"
+                  value={projectName}
+                  onChange={e => setProjectName(e.target.value)}
+                  className="border border-gray-500 px-2 py-1 rounded-md bg-transparent focus:outline-none"
+                />
+
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowAddForm(false)}
+                    className="px-2 py-1 rounded-md hover:bg-green-100 dark:hover:bg-[#1f2937]"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    type="submit"
+                    className="px-2 py-1 rounded-md bg-green-200 dark:bg-[#1f2937]"
+                  >
+                    Add
+                  </button>
+                </div>
+              </form>
+            )}
           </li>
           <li className="mt-5 mx-auto">
             <Link to="/tasks" className="flex items-center justify-start gap-2">
@@ -41,7 +94,11 @@ function Sidebar({ selectedProject, projects, onSelectProject }) {
           </li>
           <li className="mt-5 mx-auto">
             <div className="flex items-center justify-start gap-2" onClick={handleShowForm}>
-              <img className={`mx-auto md:ml-auto ${darkTheme && 'invert'}  h-[20px]`} src={addIcon} alt="Add Icon" />
+              <img
+                className={`mx-auto md:ml-auto dark:invert  h-[20px]`}
+                src={addIcon}
+                alt="Add Icon"
+              />
               <button className="hidden md:block">Add Task</button>
             </div>
           </li>

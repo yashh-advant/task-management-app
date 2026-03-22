@@ -3,7 +3,7 @@ import PriorityIcon from '../Icons/PriorityIcon';
 import CategoryIcon from '../Icons/CategoryIcon';
 import { priorityOptions } from '../../utils/constant';
 import { useOutletContext, useParams } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { taskActions } from '../../store/task-slice';
 import SelectOptions from '../SelectOptions';
 import TaskDetailsHeader from '../header/TaskDetailsHeader';
@@ -19,7 +19,6 @@ function TaskDetails() {
   const dispatch = useDispatch();
   const { taskId } = useParams();
   const projectId = useOutletContext();
-  const { darkTheme } = useSelector(state => state.ui);
   useEffect(() => {
     const tasks = JSON.parse(localStorage.getItem(projectId)) || [];
     const fiteredTask = tasks.filter(task => task.id == taskId);
@@ -41,7 +40,7 @@ function TaskDetails() {
   };
 
   return (
-    <div className=" w-full">
+    <div className="w-full">
       <TaskDetailsHeader projectId={projectId} taskId={taskId} />
 
       <div className="flex flex-col md:flex-row mt-3 md:p-4 p-4">
@@ -65,11 +64,11 @@ function TaskDetails() {
           <ul className="flex flex-col gap-2">
             <li className="flex items-center gap-4">
               <SelectOptions
-                classForList={`p-2 gap-2`}
+                classForList="p-2 gap-2"
                 options={[5, 4, 3, 2, 1]}
                 selectedOption={
                   <div className="flex items-center gap-2">
-                    <PriorityIcon priority={taskDetails.priority} />{' '}
+                    <PriorityIcon priority={taskDetails.priority} />
                     <p>{priorityOptions[taskDetails.priority - 1]}</p>
                   </div>
                 }
@@ -78,7 +77,9 @@ function TaskDetails() {
                   options.map(option => (
                     <li
                       key={option}
-                      className={`flex gap-2 px-1 items-center rounded-md py-[2px] ${option === taskDetails.priority && (darkTheme ? 'bg-[#1f2937] ' : 'bg-green-100')} ${darkTheme ? 'hover:bg-[#1f2937] ' : 'hover:bg-green-100'}`}
+                      className={`flex gap-2 px-1 items-center rounded-md py-[2px]
+                        ${option === taskDetails.priority ? 'bg-green-100 dark:bg-[#1f2937]' : ''}
+                        hover:bg-green-100 dark:hover:bg-[#1f2937]`}
                       onClick={() => onChangeHandler('priority', option)}
                     >
                       <PriorityIcon priority={option} />
@@ -91,7 +92,7 @@ function TaskDetails() {
 
             <li className="flex items-center gap-4">
               <SelectOptions
-                classForList={` p-2 gap-2`}
+                classForList="p-2 gap-2"
                 options={['todo', 'pending', 'completed']}
                 selectedOption={
                   <div className="flex items-center gap-2">
@@ -104,7 +105,9 @@ function TaskDetails() {
                   options.map(option => (
                     <li
                       key={option}
-                      className={`flex gap-2 px-1 items-center rounded-md py-[2px] ${option === taskDetails.category && (darkTheme ? 'bg-[#1f2937] ' : 'bg-green-100')} ${darkTheme ? 'hover:bg-[#1f2937] ' : 'hover:bg-green-100'}`}
+                      className={`flex gap-2 px-1 items-center rounded-md py-[2px]
+                        ${option === taskDetails.category ? 'bg-green-100 dark:bg-[#1f2937]' : ''}
+                        hover:bg-green-100 dark:hover:bg-[#1f2937]`}
                       onClick={() => onChangeHandler('category', option)}
                     >
                       <CategoryIcon category={option} />
@@ -118,6 +121,7 @@ function TaskDetails() {
             <li className="flex items-center gap-4">
               <input
                 type="date"
+                className="bg-transparent dark:bg-[#1f2937] px-2 py-1 rounded-md"
                 value={
                   taskDetails.due_date
                     ? new Date(taskDetails.due_date).toLocaleDateString('en-CA')

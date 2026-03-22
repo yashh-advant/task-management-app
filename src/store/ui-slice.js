@@ -13,7 +13,7 @@ const uiSlice = createSlice({
     toggleTheme: state => {
       state.darkTheme = !state.darkTheme;
     },
-    setTheme: (state, action) => {
+    setDarkTheme: (state, action) => {
       state.darkTheme = action.payload;
     },
   },
