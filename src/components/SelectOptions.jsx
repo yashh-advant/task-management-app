@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 
-function SelectOptions({ selectedOption, options, children }) {
-  console.log(selectedOption);
-
+function SelectOptions({ classForSelected, classForList, selectedOption, options, children }) {
+  // console.log(selectedOption);
   const [showOptions, setShowOptions] = useState(false);
   const handleShowOptions = () => {
     setShowOptions(prev => !prev);
   };
   return (
     <div className="relative" onClick={handleShowOptions}>
-      <p className="bg-gray-700 p-1.5 rounded-md">{selectedOption}</p>
+      <div className={classForSelected}>{selectedOption}</div>
+
       {showOptions && (
-        <div className="absolute bg-gray-600 p-2 mt-2 rounded-md">
+        <div
+          className={`absolute z-10 rounded-md 
+        bg-white dark:bg-[#030712] 
+        border border-gray-500 
+        ${classForList}`}
+        >
           <ul className="flex flex-col gap-1 w-fit">{children(options)}</ul>
         </div>
       )}

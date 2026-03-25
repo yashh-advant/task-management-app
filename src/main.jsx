@@ -4,7 +4,6 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import { Provider } from 'react-redux';
 import store from './store/store.js';
-import Tasks from './components/task/TasksContainer.jsx';
 import TasksLayout from './layout/TasksLayout.jsx';
 import RootLayout from './layout/RootLayout.jsx';
 import Home from './components/Home.jsx';
@@ -12,6 +11,10 @@ import AuthForm from './components/auth/AuthForm.jsx';
 import Authenticator from './components/Authenticator.jsx';
 import { login } from './services/auth-service.js';
 import TasksContainer from './components/task/TasksContainer.jsx';
+import TaskDetails from './components/task/TaskDetails.jsx';
+import NotFound from './components/NotFound.jsx';
+import SelectProject from './components/project/AddProject.jsx';
+import AddProject from './components/project/AddProject.jsx';
 
 const router = createBrowserRouter([
   {
@@ -57,7 +60,19 @@ const router = createBrowserRouter([
         path: '',
         element: <TasksContainer />,
       },
+      {
+        path: ':taskId',
+        element: <TaskDetails />,
+      },
     ],
+  },
+  {
+    path: 'new-project',
+    element: <AddProject />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 
