@@ -3,14 +3,16 @@ import { NavLink } from 'react-router';
 
 function Header() {
   return (
-    <header className=" border-b md:h-[60px] border-gray-800 md:text-3xl h-[50px] px-5  flex items-center w-full">
+    <header className="w-full flex items-center px-5 h-[50px] md:h-[60px] md:text-3xl border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#030712]">
       <nav className=" w-full">
-        <ul className="flex justify-between items-center gap-6 text-sm md:text-lg text-gray-200">
+        <ul className="flex justify-between items-center gap-6 text-sm md:text-lg text-gray-800 dark:text-gray-200">
           <li>
             <NavLink
               to="/"
               className={({ isActive }) =>
-                isActive ? 'text-white border-b border-white pb-1' : 'hover:text-gray-400'
+                isActive
+                  ? 'text-black dark:text-white border-b border-black dark:border-white pb-1'
+                  : 'hover:text-gray-600 dark:hover:text-gray-400'
               }
             >
               Home
@@ -20,7 +22,9 @@ function Header() {
             <NavLink
               to="/signup"
               className={({ isActive }) =>
-                isActive ? 'text-white border-b border-white pb-1' : 'hover:text-gray-400'
+                isActive
+                  ? 'text-black dark:text-white border-b border-black dark:border-white pb-1'
+                  : 'hover:text-gray-600 dark:hover:text-gray-400'
               }
             >
               Signup
@@ -29,7 +33,9 @@ function Header() {
             <NavLink
               to="/login"
               className={({ isActive }) =>
-                isActive ? 'text-white border-b border-white pb-1' : 'hover:text-gray-400'
+                isActive
+                  ? 'text-black dark:text-white border-b border-black dark:border-white pb-1'
+                  : 'hover:text-gray-600 dark:hover:text-gray-400'
               }
             >
               Login
